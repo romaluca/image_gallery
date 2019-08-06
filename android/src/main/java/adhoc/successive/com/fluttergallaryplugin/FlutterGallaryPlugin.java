@@ -183,7 +183,8 @@ public class FlutterGallaryPlugin implements MethodCallHandler {
                 MediaStore.Images.ImageColumns.DISPLAY_NAME,
                 MediaStore.Images.ImageColumns.DATE_ADDED,
                 MediaStore.Images.ImageColumns.TITLE};
-        Cursor c = activity.getContentResolver().query(uri, projection, null, null, null);
+        Cursor c = activity.getContentResolver().query(uri, projection, null, null, 
+                                                      MediaStore.Images.ImageColumns.DATE_ADDED + " DESC");
         if (c != null) {
             while (c.moveToNext()) {
                 Log.e("", "getAllImageList: " + c.getString(0));
