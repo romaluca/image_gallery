@@ -177,25 +177,28 @@ public class FlutterGallaryPlugin implements MethodCallHandler {
         ArrayList<String> displayNameList = new ArrayList<>();
         ArrayList<String> dateAddedList = new ArrayList<>();
         ArrayList<String> titleList = new ArrayList<>();
+        ArrayList<String> idsList = new ArrayList<>();
 
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Images.ImageColumns.DATA,
                 MediaStore.Images.ImageColumns.DISPLAY_NAME,
                 MediaStore.Images.ImageColumns.DATE_ADDED,
-                MediaStore.Images.ImageColumns.TITLE};
+                MediaStore.Images.ImageColumns.TITLE,
+                MediaStore.Images.ImageColumns._ID};
         Cursor c = activity.getContentResolver().query(uri, projection, null, null, 
                                                       MediaStore.Images.ImageColumns.DATE_ADDED + " DESC");
         if (c != null) {
             while (c.moveToNext()) {
-                Log.e("", "getAllImageList: " + c.getString(0));
+                /*Log.e("", "getAllImageList: " + c.getString(0));
                 Log.e("", "getAllImageList: " + c.getString(1));
                 Log.e("", "getAllImageList: " + c.getString(2));
-                Log.e("", "getAllImageList: " + c.getString(3));
+                Log.e("", "getAllImageList: " + c.getString(3));*/
 
                 titleList.add(c.getString(3));
                 displayNameList.add(c.getString(1));
                 dateAddedList.add(c.getString(2));
                 allImageList.add(c.getString(0));
+                idsList.add(c.getString(4));
             }
             c.close();
 
@@ -203,6 +206,7 @@ public class FlutterGallaryPlugin implements MethodCallHandler {
             allImageInfoList.put("DISPLAY_NAME", displayNameList);
             allImageInfoList.put("DATE_ADDED", dateAddedList);
             allImageInfoList.put("TITLE", titleList);
+            allImageInfoList.put("IDS", idsList);
 
         }
         return allImageInfoList;
